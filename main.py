@@ -68,16 +68,16 @@ def df_db(t):
 
     return df_debenture
 
-def escolhe_debenture(t):
-    DB = df_db(t)
-    debenture = input("Código debenture: ")
+def escolhe_debenture(t,debenture):
+
+
     DB = df_db(t)
     DB = DB[DB['Código'] == debenture][['Data Vencimento', 'Taxa Indicativa']]
     DB = DB.set_index('Data Vencimento')
     return DB
 
-def interpola_df(t):
-    DB = escolhe_debenture(t)
+def interpola_df(t,debenture):
+    DB = escolhe_debenture(t,debenture)
 
     ntnb = df_ntnb(t)
 
@@ -94,9 +94,9 @@ def interpola_df(t):
 
     return ntnb_interpolada
 
-def plota_grafico(t):
-    DB = escolhe_debenture(t)
-    NTN_B = interpola_df(t)
+def plota_grafico(t, debenture):
+    DB = escolhe_debenture(t,debenture)
+    NTN_B = interpola_df(t,debenture)
 
     plt.plot(DB, 'ro')
     plt.plot(NTN_B, 'go')
@@ -120,9 +120,7 @@ else:
 resultado = download(t)
 print(resultado)
 
-#df_ntnb(t) funciona - 1
-#df_db(t) funciona - 2
-#escolhe_debenture(t) - 3
-#interpola_df(t) - 4
 
-plota_grafico(t)
+
+debenture = input("Código debenture: ")
+plota_grafico(t,debenture)
